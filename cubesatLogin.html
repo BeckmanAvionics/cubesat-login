@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="cubesatLogin.css" media="all" />
+    <title>Cubesat Login</title>
+</head>
+<body>
+    <script>
+        var ws = new WebSocket('ws://localhost:8080');
+        const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        var d = new Date();
+        var month = d.getMonth() + 1
+        var day = d.getDate();
+
+        function nameSubmit() {
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var message = {
+                firstname: firstName,
+                lastname: lastName,
+                month: month,
+                day: day,
+                weekday: week[d.getDay()],
+            };
+            if (firstName && lastName) {
+                document.getElementById("firstName").value = "";
+                document.getElementById("firstName").placeholder = "First Name";
+                document.getElementById("lastName").value = "";
+                document.getElementById("lastName").placeholder = "Last Name";
+                document.getElementById("submission").innerHTML = "Thank you for signing in " + firstName + " " + lastName;
+                ws.send(JSON.stringify(message)); //sends name to server
+
+                ws.onmessage = (e) => {
+                    console.log(e.data + " has logged in!"); //confirms that server received name
+                }
+            } else {
+                alert("Insert your full name");
+            }
+            return false;
+        }
+    </script>
+    <div id="body">
+        <h1>Cubesat Meeting Login</h1>
+        <form>
+            <input type="text" placeholder="First Name" onsubmit="nameSubmit" id="firstName">
+            <br />
+            <input type="text" placeholder="Last Name" onsubmit="nameSubmit" id="lastName">
+            <br />
+            <button type="submit" onclick="return nameSubmit()"> Submit </button>
+        </form>
+        <p id="submission"></p>
+    </div>
+</body>
+</html>

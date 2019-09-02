@@ -1,0 +1,55 @@
+#body {
+    text-align: center;
+}
+
+h1 {
+    color: #000000;
+}
+
+div form input {
+    border-radius: 10px;
+    border: 1px solid #000000;
+    background-color:  #0B2749;
+    color: #ffffff;
+    text-align: center;
+}
+
+div form input::placeholder {   
+    color: #ffffff;
+    text-align: center;
+}
+
+div form input:focus {
+    outline: 0;
+}
+
+div h1 {
+    font-family: sans-serif;
+}
+
+form input {
+    padding: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: 5px;
+}
+
+form button {
+    padding: 10px;
+    margin: 5px;
+    margin-top: 10px;
+    background-color: #ffffff;
+    border: 1px solid #0B2749 ;
+    border-radius: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+form button:focus {
+    outline: 0;
+}
+
+form button:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
