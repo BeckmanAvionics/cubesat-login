@@ -14,25 +14,11 @@ const FILENAME = 'login.txt';
 
 var d = new Date();
 var date; //d.getDate(); 
-var sameDay;
-var password = 'password';
+var sameDay = true;
+var password;
 
 wss.on('connection', (ws => {
-
-    if (!date) {
-        sameDay = false;
-        date = d.getDate();
-        console.log('first')
-    } else {
-        if (date != d.getDate()) {
-            sameDay = false;
-            date = d.getDate();
-            console.log('second')
-        } else {
-            sameDay = true;
-            console.log('third')
-        }
-    }
+    console.log('Client has connected!')
 
     ws.on('message', (message => {
         console.log('Received message:', message);
@@ -40,6 +26,22 @@ wss.on('connection', (ws => {
 
         if (msg.id == 'member') {
             if (msg.password == password) {
+                //checks date stuff
+                if (!date) {
+                    sameDay = false;
+                    date = d.getDate();
+                    console.log('first')
+                } else {
+                    if (date != d.getDate()) {
+                        sameDay = false;
+                        date = d.getDate();
+                        console.log('second')
+                    } else {
+                        sameDay = true;
+                        console.log('third')
+                    }
+                }
+
                 //writes to text file
                 var logger = fs.createWriteStream(FILENAME, {
                     flags: 'a'
@@ -68,8 +70,6 @@ wss.on('connection', (ws => {
             }
         }
     }));
-
-
     ws.on('close', () => {
         console.log('client disconnected from server');
     });
