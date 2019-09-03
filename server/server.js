@@ -5,7 +5,7 @@
 const WebSocket = require('ws').Server;
 
 const fs = require('fs');
-console.log('SYSTEM TASK INITIATED: TERMINATE YOUR MOM');
+console.log('connected');
 
 const wss = new WebSocket({
     port: 8081 
@@ -13,15 +13,25 @@ const wss = new WebSocket({
 const FILENAME = 'login.txt';
 
 var d = new Date();
-var date = d.getDate();
+var date; //d.getDate(); 
 var sameDay;
 
 wss.on('connection', (ws => {
-    //Checks if it's a new date (meeting)
-    if (date != d.getDate()){
+
+    if(!date) {
         sameDay = false;
         date = d.getDate();
-    } else { sameDay = true };
+        console.log('first')
+    } else {
+        if(date != d.getDate()) {
+            sameDay = false;
+            date = d.getDate();
+            console.log('second')
+        } else {
+            sameDay = true;
+            console.log('third')
+        }
+    }
 
     ws.on('message', (message => {
         console.log('Received message:', message); 
