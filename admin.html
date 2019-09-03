@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="cubesatLogin.css" media="all" />
+    <title>Cubesat Login</title>
+</head>
+<body>
+    <script>
+        //const PATH = 'ws://68.101.96.143:8081';
+        const PATH = 'ws://localhost:8081';
+
+        var ws = new WebSocket(PATH);
+
+        function passwordSubmit() {
+            var password = document.getElementById("password").value;
+            var message = {
+                password: password,
+                id: 'admin',
+            };
+            if (password) {
+                ws.send(JSON.stringify(message)); //sends name to server
+                document.getElementById("password").value = "";
+                ws.onmessage = (e) => {
+                    console.log(e.data);
+                    document.getElementById("submission").innerHTML = "You have set this meeting's password as: " + e.data;
+                }
+            } else {
+                alert("no password u retard");
+            }
+            return false;
+        }
+    </script>
+    <div id="body">
+        <h1>Cubesat Admin</h1>
+        <form>
+            <input type="text" placeholder="password" onsubmit="passwordSubmit" id="password">
+            <br />
+            <button type="submit" onclick="return passwordSubmit()"> Submit </button>
+        </form>
+        <p id="submission"></p>
+    </div>
+</body>
+</html>
