@@ -41,7 +41,8 @@
 
                 ws.onmessage = (e) => {
                     alert(e.data); 
-                    console.log(e); 
+                    console.log(e);
+                    document.getElementById("submission").innerHTML = "Thank you for signing in: " + firstName + " " + lastName;
                 }
             } else {
                 alert("Insert your full name");
